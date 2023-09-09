@@ -16,7 +16,7 @@ unsetopt nomatch
 export PS1=$'\n'"%F{green} %*%F %3~ %F{white}"$'\n'"$ "
 
 # Enable plugins.
-plugins=(git brew history kubectl history-substring-search)
+# plugins=(git brew history kubectl history-substring-search)
 
 # Custom $PATH with extra locations.
 export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:$HOME/bin:$HOME/go/bin:/usr/local/git/bin:$HOME/.composer/vendor/bin:$PATH
@@ -41,9 +41,12 @@ else
 fi
 
 # Allow history search via up/down keys.
-source ${share_path}/zsh-history-substring-search/zsh-history-substring-search.zsh
-bindkey "^[[A" history-substring-search-up
-bindkey "^[[B" history-substring-search-down
+# source ${share_path}/zsh-history-substring-search/zsh-history-substring-search.zsh
+# bindkey "^[[A" history-substring-search-up
+# bindkey "^[[B" history-substring-search-down
+
+# Profile alias
+alias prof="vim ~/.zshrc"
 
 # Git aliases.
 alias gs='git status'
@@ -125,3 +128,9 @@ export COMPOSER_MEMORY_LIMIT=-1
 #}
 #shopt -s extdebug
 #trap prod_command_trap DEBUG
+
+
+export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.10/bin"
+
+# export PATH=/opt/homebrew/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/Users/tommy.couzens/bin:/Users/tommy.couzens/go/bin:/usr/local/git/bin:/Users/tommy.couzens/.composer/vendor/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/Users/tommy.couzens/bin:/Users/tommy.couzens/go/bin:/usr/local/git/bin:/Users/tommy.couzens/.composer/vendor/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/homebrew/bin:/usr/local/sbin:/Users/tommy.couzens/bin:/Users/tommy.couzens/go/bin:/usr/local/git/bin:/Users/tommy.couzens/.composer/vendor/bin
+# export PATH=/opt/homebrew/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/Users/tommy.couzens/bin:/Users/tommy.couzens/go/bin:/usr/local/git/bin:/Users/tommy.couzens/.composer/vendor/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin

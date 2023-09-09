@@ -1,6 +1,6 @@
 [user]
-  name = Jeff Geerling
-  email = geerlingguy@mac.com
+  name = asos-tommycouzens
+  email = tommy.couzens@asos.com
 [core]
   editor = vi
   excludesfile = ~/.gitignore
@@ -18,10 +18,19 @@
   helper = osxkeychain
 [push]
   default = simple
+  autosetupremote=true
 [merge]
   tool = kdiff3
 [difftool]
   prompt = false
+  # difftool.sourcetree.cmd=opendiff "$LOCAL" "$REMOTE"
+  # difftool.sourcetree.path=
+
+# mergetool.sourcetree.cmd=/Applications/Sourcetree 2.app/Contents/Resources/opendiff-w.sh "$LOCAL" "$REMOTE" -ancestor "$BASE" -merge "$MERGED"
+# mergetool.sourcetree.trustexitcode=true
+
+# icdiff.options=--highlight --line-numbers
+
 [alias]
   c = commit
   ca = commit -a
