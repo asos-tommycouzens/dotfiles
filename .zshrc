@@ -45,8 +45,7 @@ fi
 # bindkey "^[[A" history-substring-search-up
 # bindkey "^[[B" history-substring-search-down
 
-# Profile alias
-alias prof="vim ~/.zshrc"
+
 
 # Git aliases.
 alias gs='git status'

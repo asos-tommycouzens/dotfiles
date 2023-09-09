@@ -1,0 +1,18 @@
+
+dotfiles_path=~/code/dotfiles
+
+# Source cli for managing dotfiles
+source ~/.dot-cli.sh
+
+
+## Update setting with new dotfiles
+udot() {
+  cd ~/code/mac-dev-playbook
+  ansible-playbook main.yml --tags dotfiles
+  cd -
+  source ~/.zshrc
+}
+
+hi() {
+  echo "Hello, $1"
+}
