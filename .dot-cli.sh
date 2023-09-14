@@ -3,10 +3,11 @@
 function dot_help() {
     echo "Usage: dot [subcommand] [options]"
     echo "Subcommands:"
-    echo "    help    Show this help message"
-    echo "    ls      See a list of your configured dotfiles"
-    echo "    open    Open dotfiles in your editor"
-    echo "    update  Execute the update subcommand"
+    echo "h    help    Show this help message"
+    echo "ls    ls      See a list of your configured dotfiles"
+    echo "s    source  Source your dotfiles"
+    echo "o    open    Open dotfiles in your editor"
+    echo "u    update  Execute the update subcommand"
 }
 
 function dot_ls() {
@@ -22,6 +23,11 @@ function dot_open() {
 
     echo "Opening $dot_path..."
     code "$dot_path"
+}
+
+function dot_source() {
+    echo "Sourcing dotfiles..."
+    source ~/.zshrc
 }
 
 function dot_update() {
@@ -44,16 +50,19 @@ function dot() {
     shift
 
     case $subcommand in
-        help)
+        help || h)
             dot_help
             ;;
         ls)
             dot_ls
             ;;
-        open)
+        source || s)
+            dot_source
+            ;;
+        open || o)
             dot_open $1
             ;;
-        update)
+        update || u)
             dot_update
             ;;
         *)

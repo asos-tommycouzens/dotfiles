@@ -5,15 +5,34 @@
 #
 
 # Colors.
-unset LSCOLORS
-export CLICOLOR=1
-export CLICOLOR_FORCE=1
+# unset LSCOLORS
+# export CLICOLOR=1
+# export CLICOLOR_FORCE=1
 
 # Don't require escaping globbing characters in zsh.
 unsetopt nomatch
 
+function parse_git_branch {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+
+function parse_git_branch {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
 # Nicer prompt.
-export PS1=$'\n'"%F{green} %*%F %3~ %F{white}"$'\n'"$ "
+# : Displays an apple logo (or a similar character depending on the font and terminal you're using).
+# %*: Displays the current time in 24-hour format (hh:mm).
+# %3~: Displays the current working directory, but only the last three components of the directory path (if the path is very long).
+COLOR_DEF=$'%f'
+COLOR_TIME=$'%F{green}'
+COLOR_DIR=$'%F{yellow}'
+COLOR_GIT=$'%F{blue}'
+NEW_LINE=$'%{\n%}'
+setopt PROMPT_SUBST
+export PROMPT='${COLOR_TIME} %* ${COLOR_DIR}%3~${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}${NEW_LINE} $ '
+
 
 # Enable plugins.
 # plugins=(git brew history kubectl history-substring-search)
@@ -28,6 +47,27 @@ export TIMEFMT=$'\nreal\t%*E\nuser\t%*U\nsys\t%*S'
 if [ -f ~/.aliases ]
 then
   source ~/.aliases
+fi
+
+# Include secrets file
+if [ -f ~/.secrets ]
+then
+  source ~/.secrets
+fi
+
+if [ -f ~/code/kubectl-aliases/.kubectl_aliases ]
+then
+  source ~/code/kubectl-aliases/.kubectl_aliases
+fi
+
+if [ -f /Users/tommy.couzens/code/dotfiles/kubectl_shortcuts.sh ]
+then
+  source /Users/tommy.couzens/code/dotfiles/kubectl_shortcuts.sh
+fi
+
+if [ -f ~/.dot-cli.sh ]
+then
+  source ~/.dot-cli.sh
 fi
 
 # Set architecture-specific brew share path.
@@ -127,6 +167,10 @@ export COMPOSER_MEMORY_LIMIT=-1
 #}
 #shopt -s extdebug
 #trap prod_command_trap DEBUG
+
+
+export MCFLY_RESULTS_SORT=LAST_RUN
+
 
 
 export PATH="$PATH:/Library/Frameworks/Python.framework/Versions/3.10/bin"

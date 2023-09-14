@@ -1,18 +1,131 @@
+# alias prof='vi  ~/code/dotfiles/.zshrc'
+# alias profa='vi ~/bash-profile/aliases.sh'
+# alias profs='vi ~/bash-profile/secrets.sh'
+# alias secrets='profs'
+alias sprof='source ~/.zshrc'
+# alias asos='cd /Users/tommy.couzens/asos/github/'
+# TODO make lwg function open http://localhost:8080/play/js/lwg-worker-4.8.1.js and http://localhost:8080/play/js/lwg-4.8.1.js in chrome
+# TODO make lwg function open workspace with correct terminal windows? that'd be cool
+alias lwg='code ~/personal/littlewargame'
+alias olwg=lwg
+alias dns='cd /Users/tommy.couzens/code/asos-core-dns-manager'
+alias awata='cd /Users/tommy.couzens/code/asos-web-ansible-test-application'
+alias oansible='code /Users/tommy.couzens/code/asos-web-ansible'
+alias oaks='code /Users/tommy.couzens/asos/vsc/workspaces/aks.code-workspace'
+alias odns='code /Users/tommy.couzens/code/asos-core-dns-manager'
+alias ogha='code /Users/tommy.couzens/code/asos-core-githubactions-runners'
+alias orunners='ogha'
+alias aawata='code -a ../asos-web-ansible-test-application'
+alias oopogo='code /Users/tommy.couzens/anrize/opogo/Opogo%20CMS'
+alias osky='code /Users/tommy.couzens/anrize/skyofnorway'
+alias ojohnny='code /Users/tommy.couzens/OneDrive/"Johnny Decimal"'
 
-dotfiles_path=~/code/dotfiles
-
-# Source cli for managing dotfiles
-source ~/.dot-cli.sh
-
-
-## Update setting with new dotfiles
-udot() {
-  cd ~/code/mac-dev-playbook
-  ansible-playbook main.yml --tags dotfiles
-  cd -
-  source ~/.zshrc
+rmhost() {
+  gsed -i "/$1/d" ~/.ssh/known_hosts
 }
 
-hi() {
-  echo "Hello, $1"
+alias s='say command has finished running'
+
+alias pip='pip3'
+alias python='python3'
+
+a() {
+    /usr/bin/osascript -e 'tell app "System Events" to display dialog "command finished"'
 }
+am() {
+    /usr/bin/osascript -e "tell app \"System Events\" to display dialog \"$1\""
+}
+alias diff=icdiff
+
+gitu() {
+  default_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
+  git checkout $default_branch
+  git pull
+  git checkout -
+  git merge $default_branch
+}
+
+
+gsquash() {
+  default_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
+  current_branch=$(git symbolic-ref --short HEAD)
+
+  # Exit if current branch is default branch
+  if [ "$current_branch" = "$default_branch" ]; then
+    echo "Cannot squash commits on default branch"
+    exit 1
+  fi
+
+  read -p "Enter commit message for squashed commit: " commit_message
+
+  git checkout $default_branch
+
+
+  # generate random temp branch name
+  temp_branch="squash-commits-$(date +%s)"
+  git merge --squash $current_branch
+  git commit -m "Squash commits"
+
+  # TODO: Add check that new branch is correct before deleting old branch
+  git branch -D $current_branch
+  git checkout -b $current_branch
+
+  # TODO: Add check before force push
+  git push -f
+
+  # TODO: Add check before temp branch
+  git branch -D $temp_branch
+}
+
+set_pod_name() {
+  num=0
+  pod=$(kgpoojson | jq -r ".items[$num].metadata.name")
+}
+
+alias gs='git status'
+alias gd='git icdiff'
+gr() { 
+  git add -A
+  if [ -z "$1" ]
+  then
+     git commit -m "WIP"
+  else
+  git commit -m "$1"
+ fi
+  git push
+}
+
+gra() {
+  git add -A
+  git commit --amend --no-edit
+  git push -f
+}
+
+mcd() {
+  mkdir $1
+  cd $1
+}
+
+loop() {
+  while true; do eval $1; sleep 2; done
+}
+
+# Find and replace with ag
+# https://gist.github.com/hlissner/db74d23fc00bed81ff62
+function agr { ag -0 -l "$1" | AGR_FROM="$1" AGR_TO="$2" xargs -r0 perl -pi -e 's/$ENV{AGR_FROM}/$ENV{AGR_TO}/g'; }
+
+
+# create n with number 1 if it doesn't exist
+if [ ! -f ~/.n ]; then
+  echo 1 > ~/.n
+fi
+n=$(cat ~/.n)
+
+increment_n() {
+ n=$(cat ~/.n)
+ n=$((n+1))
+ echo $n > ~/.n
+}
+
+## stop most recent running container
+# docker stop $(docker ps | awk 'NR > 1 {print $1}')
